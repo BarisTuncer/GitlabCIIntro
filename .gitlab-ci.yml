@@ -1,7 +1,15 @@
-stages:
-    - test
-test:
-    stage: test
+# Use the official gcc image
+image: gcc
+
+before_script:
+    # Install build dependencies
+    - apt-get update && apt-get -y install cmake
+
+myapp:
+    # Build the application
+    stage: build
     script:
-        - echo "Success!"
-        - exit 1
+        - mkdir build
+        - cd build
+        - cmake ..
+        - make
