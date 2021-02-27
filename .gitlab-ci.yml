@@ -7,6 +7,18 @@ before_script:
     - mkdir -p $HOME/.local
     - curl -s "https://cmake.org/files/v3.19/cmake-3.19.4-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C $HOME/.local
     - export PATH=$HOME/.local/bin:$PATH
+    # install cmocka
+    - wget http://git.cryptomilk.org/projects/cmocka.git/snapshot/master.tar.gz
+    - tar -xvf master
+    - cd master
+    - mkdir build
+    - cd build
+    - cmake ..
+    - sudo make all install
+    - sudo ldconfig
+    # install adress sanitizer
+    - sudo apt install libasan5
+
 
 myapp:
     # Build the application
