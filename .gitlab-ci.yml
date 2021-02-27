@@ -1,5 +1,6 @@
 # Use the latest ubuntu image
-image: ubuntu:latest
+stages:
+  - build
 
 build:
   stage: build
@@ -28,3 +29,7 @@ build:
     - cd build
     - cmake ..
     - make
+  artifacts:
+      expire_in: 10 mins
+      paths:
+        - build/*
