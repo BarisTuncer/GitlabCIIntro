@@ -9,7 +9,7 @@ before_script:
     - export PATH=$HOME/.local/bin:$PATH
     # install cmocka
     - wget http://git.cryptomilk.org/projects/cmocka.git/snapshot/master.tar.gz
-    - tar -xvf master
+    - tar -xvf master.tar.gz
     - cd master
     - mkdir build
     - cd build
