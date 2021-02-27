@@ -19,11 +19,14 @@ before_script:
     - ldconfig
     # install adress sanitizer
     - apt-get install libasan5
+    # install gcovr
+    - apt-get install gcovr
 
 myapp:
     # Build the application
     stage: build
     script:
+        - rm -r build
         - mkdir build
         - cd build
         - cmake ..
