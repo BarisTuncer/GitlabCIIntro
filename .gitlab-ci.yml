@@ -16,9 +16,9 @@ before_script:
     - cmake ..
     - make all install
     - cd ..
-    - sudo ldconfig
+    - ldconfig
     # install adress sanitizer
-    - sudo apt install libasan5
+    - apt-get install libasan5
 
 myapp:
     # Build the application
