@@ -1,8 +1,13 @@
-# Use the official gcc image
-image: gcc
+# Use the latest ubuntu image
+image: ubuntu:latest
 
-before_script:
-    # Install build dependencies
+build:
+  stage: build
+  # instead of calling g++ directly you can also use some build toolkit like make
+  # install the necessary build tools when needed
+  before_script:
+    # install build toolkit ( gcovr ggcov lcov for code coverage)
+    - apt update && apt -y install make gcc gcovr ggcov lcov
     # We will install latest CMake
     - mkdir -p $HOME/.local
     - curl -s "https://cmake.org/files/v3.19/cmake-3.19.4-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C $HOME/.local
@@ -19,23 +24,9 @@ before_script:
     - ldconfig
     # install adress sanitizer
     - apt-get install libasan5
-    # install python and pip
-    - apt-get -qq update && apt-get -qq install -y python
-    - apt-get -qq update
-    - apt-get -qq install -y python python-virtualenv python-pip
-    - virtualenv venv
-    - . venv/bin/activate
-    - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-    - python get-pip.py
-    # install gcover
-    - pip install gcovr
-
-myapp:
-    # Build the application
-    stage: build
-    script:
-        - rm -r build
-        - mkdir build
-        - cd build
-        - cmake ..
-        - make
+  script:
+      - rm -r build
+      - mkdir build
+      - cd build
+      - cmake ..
+      - make
