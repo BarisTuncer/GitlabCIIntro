@@ -14,11 +14,11 @@ before_script:
     - mkdir build
     - cd build
     - cmake ..
-    - sudo make all install
+    - make all install
+    - cd ..
     - sudo ldconfig
     # install adress sanitizer
     - sudo apt install libasan5
-
 
 myapp:
     # Build the application
