@@ -20,7 +20,7 @@ before_script:
     # install adress sanitizer
     - apt-get install libasan5
     # install gcovr
-    - apt-get install gcovr
+    - pip install gcovr
 
 myapp:
     # Build the application
