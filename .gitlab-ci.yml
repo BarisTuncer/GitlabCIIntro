@@ -19,8 +19,9 @@ before_script:
     - ldconfig
     # install adress sanitizer
     - apt-get install libasan5
+    # install pyhon
+    - apt-get install -y python-dev python-pip
     # install gcovr
-    - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
     - pip install gcovr
 
 myapp:
