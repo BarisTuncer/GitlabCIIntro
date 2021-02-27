@@ -20,7 +20,11 @@ before_script:
     # install adress sanitizer
     - apt-get install libasan5
     # install python and pip
-    - apt-get install -y python-dev
+    - apt-get -qq update && apt-get -qq install -y python
+    - apt-get -qq update
+    - apt-get -qq install -y python python-virtualenv python-pip
+    - virtualenv venv
+    - . venv/bin/activate
     - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
     - python get-pip.py
     # install gcover
