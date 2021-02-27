@@ -3,7 +3,7 @@ image: gcc
 
 before_script:
     # Install build dependencies
-    # We will install latest CMake, even though Ubuntu has a recent one
+    # We will install latest CMake
     - mkdir -p $HOME/.local
     - curl -s "https://cmake.org/files/v3.19/cmake-3.19.4-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C $HOME/.local
     - export PATH=$HOME/.local/bin:$PATH
@@ -20,6 +20,7 @@ before_script:
     # install adress sanitizer
     - apt-get install libasan5
     # install gcovr
+    - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
     - pip install gcovr
 
 myapp:
