@@ -42,7 +42,7 @@ build-job:
   artifacts:
     expire_in: 1 week
     paths:
-      - build/
+      - build
 
 test-job:
   stage: test
