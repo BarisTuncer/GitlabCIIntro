@@ -13,8 +13,6 @@ stages:
 
 build-job:
   stage: build
-  # instead of calling g++ directly you can also use some build toolkit like make
-  # install the necessary build tools when needed
   before_script:
     # install build toolkit ( libasan5 for  adress sanitizer, gcovr ggcov lcov for code coverage)
     - apt-get update
@@ -32,9 +30,10 @@ build-job:
     - cmake ..
     - make all install
     - cd ..
+    - cd ..
     - ldconfig
+    - rm -rf master
   script:
-    - rm -rf build
     - mkdir build
     - cd build
     - cmake ..
