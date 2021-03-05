@@ -1,38 +1,15 @@
-image: ubuntu:latest
 variables:
-  DEBIAN_FRONTEND: noninteractive
-  CCACHE_DIR: $CI_PROJECT_DIR/.ccache
-  CCACHE_BASEDIR: $CI_PROJECT_DIR
-cache:
-  paths:
-    - .ccache
+  PROJECT_GROUP: gitlab-ci-intro-group/gitlabciimages
+  FEDORA_BUILD: buildenv-fedora
+  UBUNTU_BUILD: buildenv-ubuntu
 
 stages:
   - build
   - test
 
-build-job:
+fedora-build-job:
+  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   stage: build
-  before_script:
-    # install build toolkit ( libasan5 for  adress sanitizer, gcovr ggcov lcov for code coverage)
-    - apt-get update
-    - apt-get -y install make build-essential libasan5 gcc gcovr lcov ccache curl tar wget
-    # We will install latest CMake
-    - mkdir -p $HOME/.local
-    - curl -s "https://cmake.org/files/v3.19/cmake-3.19.4-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C $HOME/.local
-    - export PATH=$HOME/.local/bin:$PATH
-    # install cmocka
-    - wget http://git.cryptomilk.org/projects/cmocka.git/snapshot/master.tar.gz
-    - tar -xvf master.tar.gz
-    - cd master
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make all install
-    - cd ..
-    - cd ..
-    - ldconfig
-    - rm -rf master
   script:
     - mkdir build
     - cd build
@@ -43,10 +20,32 @@ build-job:
     paths:
       - build
 
-test-job:
+ubuntu-build-job:
+  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$UBUNTU_BUILD
+  stage: build
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make -j$(nproc)
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - build
+
+fedora-test-job:
   stage: test
   script:
     - cd build
     - ./Driver/main
   dependencies:
-    - build-job
+    - fedora-build-job
+
+ubuntu-test-job:
+  stage: test
+  script:
+    - cd build
+    - ./Driver/main
+  dependencies:
+    - ubuntu-build-job
+
